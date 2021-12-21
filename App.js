@@ -25,9 +25,6 @@ import {
 
 import Icons from "./components/Icons" ;
 import Snackbar from "react-native-snackbar";
-import { NativeBaseConfigProvider } from "native-base/lib/typescript/core/NativeBaseContext";
-import { Header } from "react-native/Libraries/NewAppScreen";
-import { circle } from "react-native/Libraries/Animated/Easing";
 
 const itemArray = new Array(9).fill('empty')
 
@@ -35,6 +32,7 @@ const App = () => {
 
   const [isCross,setCross] = useState(false)
   const [winMsg,setWinMsg] = useState('') 
+
 
   const changeItem = (itemNumber) => {
     if(winMsg){
@@ -48,6 +46,7 @@ const App = () => {
     if(itemArray[itemNumber]=== 'empty'){
       itemArray[itemNumber] = isCross? 'cross' : 'circle' ;
       setCross(!isCross)
+
     }else{
       return Snackbar.show({
         text : "Position is already taken !!",
@@ -139,11 +138,10 @@ const App = () => {
       <NativeBaseProvider>
         <Box style={{backgroundColor: "#FFF" , padding : 5  , flex : 1}}>
             <View style={{flexDirection:"row" , alignItems : "center", justifyContent: "center", marginTop: 30}}>
-              <Heading color="#F4C724" size="2xl" >Tic</Heading>
-              <Heading color="#10A881" size="2xl" >Tac</Heading>
-              <Heading color="#F4C724" size="2xl" >Toe </Heading>
-              <CircleIcon color="#10A881"/>
-              <CloseIcon color="#F4C724" />
+              <Heading color={isCross?"#10A881" : "#F4C724"} size="2xl" >Tic</Heading>
+              <Heading color={isCross?"#F4C724" : "#10A881"} size="2xl" >Tac</Heading>
+              <Heading color={isCross?"#10A881" : "#F4C724"} size="2xl" >Toe </Heading>
+              {!isCross? <CircleIcon color="#10A881"/> : <CloseIcon color="#F4C724" /> }
             </View>
             <View style = {styles.grid}>
               {itemArray.map((item, index) => (
